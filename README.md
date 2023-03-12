@@ -1,3 +1,5 @@
-# Hexagonal Structure Template for an API in Golang
+# Altschool SMS
+
+School Management System built in Go
 
 
