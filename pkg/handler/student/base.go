@@ -1,4 +1,4 @@
-package user
+package student
 
 import (
 	"github.com/Emmrys-Jay/altschool-sms/utility"

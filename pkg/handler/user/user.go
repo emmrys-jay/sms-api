@@ -3,8 +3,8 @@ package user
 import (
 	"net/http"
 
+	"github.com/Emmrys-Jay/altschool-sms/utility"
 	"github.com/gin-gonic/gin"
-	"github.com/workshopapps/pictureminer.api/utility"
 )
 
 func (base *Controller) CreateUser(c *gin.Context) {

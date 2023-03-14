@@ -1,4 +1,4 @@
-module github.com/workshopapps/pictureminer.api
+module github.com/Emmrys-Jay/altschool-sms
 
 go 1.19
 
@@ -7,7 +7,14 @@ require (
 	go.mongodb.org/mongo-driver v1.11.0
 )
 
-require github.com/toolkits/file v0.0.0-20160325033739-a5b3c5147e07 // indirect
+require (
+	github.com/go-sql-driver/mysql v1.7.0 // indirect
+	github.com/jinzhu/inflection v1.0.0 // indirect
+	github.com/jinzhu/now v1.1.5 // indirect
+	github.com/toolkits/file v0.0.0-20160325033739-a5b3c5147e07 // indirect
+	gorm.io/driver/mysql v1.4.7 // indirect
+	gorm.io/gorm v1.24.6 // indirect
+)
 
 require (
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect

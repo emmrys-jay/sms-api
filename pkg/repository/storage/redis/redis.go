@@ -7,9 +7,9 @@ import (
 	"log"
 	"time"
 
+	"github.com/Emmrys-Jay/altschool-sms/internal/config"
+	"github.com/Emmrys-Jay/altschool-sms/utility"
 	"github.com/go-redis/redis/v8"
-	"github.com/workshopapps/pictureminer.api/internal/config"
-	"github.com/workshopapps/pictureminer.api/utility"
 )
 
 var (

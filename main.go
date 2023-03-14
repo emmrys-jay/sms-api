@@ -3,13 +3,13 @@ package main
 import (
 	"log"
 
+	"github.com/Emmrys-Jay/altschool-sms/internal/config"
+	mdb "github.com/Emmrys-Jay/altschool-sms/pkg/repository/storage/mongo"
+	"github.com/Emmrys-Jay/altschool-sms/utility"
 	"github.com/go-playground/validator/v10"
-	"github.com/workshopapps/pictureminer.api/internal/config"
-	mdb "github.com/workshopapps/pictureminer.api/pkg/repository/storage/mongo"
-	"github.com/workshopapps/pictureminer.api/utility"
 
-	// "github.com/workshopapps/pictureminer.api/pkg/repository/storage/redis"
-	"github.com/workshopapps/pictureminer.api/pkg/router"
+	// "github.com/Emmrys-Jay/altschool-sms/pkg/repository/storage/redis"
+	"github.com/Emmrys-Jay/altschool-sms/pkg/router"
 )
 
 func init() {

@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/Emmrys-Jay/altschool-sms/internal/model"
+	"github.com/Emmrys-Jay/altschool-sms/service/ping"
+	"github.com/Emmrys-Jay/altschool-sms/utility"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
-	"github.com/workshopapps/pictureminer.api/internal/model"
-	"github.com/workshopapps/pictureminer.api/service/ping"
-	"github.com/workshopapps/pictureminer.api/utility"
 )
 
 type Controller struct {

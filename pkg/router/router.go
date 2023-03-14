@@ -3,11 +3,11 @@ package router
 import (
 	"net/http"
 
+	"github.com/Emmrys-Jay/altschool-sms/pkg/middleware"
+	"github.com/Emmrys-Jay/altschool-sms/utility"
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
-	"github.com/workshopapps/pictureminer.api/pkg/middleware"
-	"github.com/workshopapps/pictureminer.api/utility"
 )
 
 func Setup(validate *validator.Validate, logger *utility.Logger) *gin.Engine {
