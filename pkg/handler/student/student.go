@@ -44,6 +44,15 @@ func (base *Controller) Get(c *gin.Context) {
 
 }
 
+func (base *Controller) List(c *gin.Context) {
+
+	// TODO: Call service to get list of records
+
+	rd := utility.BuildSuccessResponse(http.StatusCreated, "user created successfully", gin.H{"user": "login object"})
+	c.JSON(http.StatusOK, rd)
+
+}
+
 func (base *Controller) Update(c *gin.Context) {
 
 	idStr := c.Param("id")
