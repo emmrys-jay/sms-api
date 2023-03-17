@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  mysql-instance:
+    image: mysql:latest
+    restart: "always"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: default
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: sms
+    container_name: mysql-instance
+    networks:
+      - "my_network"
+
+  altschool-sms:
+    build: .
+    restart: "unless-stopped"
+    depends_on:
+      - mysql-instance
+    ports:
+      - '3000:3000'
+    container_name: altschool-sms
+#    volumes:
+#      - /mysql/datadir:var/lib/mysql
+    networks:
+      - "my_network"
+
+
+networks:
+  my_network:
