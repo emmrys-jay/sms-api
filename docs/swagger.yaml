@@ -1,0 +1,482 @@
+basePath: /api/v1
+definitions:
+  model.Course:
+    properties:
+      course_code:
+        type: string
+      created_at:
+        type: string
+      lecturer:
+        type: string
+      students:
+        items:
+          $ref: '#/definitions/model.Student'
+        type: array
+      title:
+        type: string
+      units:
+        type: integer
+      updated_at:
+        type: string
+    required:
+    - course_code
+    - title
+    - units
+    type: object
+  model.CreateStudent:
+    properties:
+      email:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      matric_number:
+        type: string
+      password:
+        minLength: 8
+        type: string
+      year_of_birth:
+        minimum: 0
+        type: integer
+    required:
+    - email
+    - first_name
+    - last_name
+    - matric_number
+    - password
+    type: object
+  model.Ping:
+    properties:
+      email:
+        type: string
+    type: object
+  model.Student:
+    properties:
+      courses:
+        items:
+          $ref: '#/definitions/model.Course'
+        type: array
+      created_at:
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      id:
+        type: integer
+      last_name:
+        type: string
+      matric_number:
+        type: string
+      updated_at:
+        type: string
+      year_of_birth:
+        type: integer
+    type: object
+  utility.Response:
+    properties:
+      code:
+        type: integer
+      data: {}
+      error:
+        description: for errors that occur even if request is successful
+      extra: {}
+      message:
+        type: string
+      name:
+        description: name of the error
+        type: string
+      status:
+        type: string
+    type: object
+host: localhost:3000
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a School Management System API.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: School Management System
+  version: "1.0"
+paths:
+  /course:
+    get:
+      consumes:
+      - application/json
+      description: list all courses
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utility.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utility.Response'
+      summary: list all courses
+      tags:
+      - Course
+    post:
+      consumes:
+      - application/json
+      description: create a course
+      parameters:
+      - description: Course
+        in: body
+        name: course
+        required: true
+        schema:
+          $ref: '#/definitions/model.Course'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/utility.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utility.Response'
+      summary: create a course
+      tags:
+      - Course
+  /course/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: delete a course
+      parameters:
+      - description: Course Code
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utility.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utility.Response'
+      summary: delete a course
+      tags:
+      - Course
+    get:
+      consumes:
+      - application/json
+      description: get a course
+      parameters:
+      - description: Course Code
+        in: path
+        name: code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utility.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utility.Response'
+      summary: get a course
+      tags:
+      - Course
+    put:
+      consumes:
+      - application/json
+      description: update a course
+      parameters:
+      - description: Course Code
+        in: path
+        name: code
+        required: true
+        type: string
+      - description: Course Update
+        in: body
+        name: update
+        required: true
+        schema:
+          $ref: '#/definitions/model.Course'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utility.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utility.Response'
+      summary: update a course
+      tags:
+      - Course
+  /course/{id}/students:
+    get:
+      consumes:
+      - application/json
+      description: list students taking a course
+      parameters:
+      - description: Course Code
+        in: path
+        name: code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utility.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utility.Response'
+      summary: list students taking a course
+      tags:
+      - Course
+  /health:
+    get:
+      consumes:
+      - application/json
+      description: check api health
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utility.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utility.Response'
+      summary: check api health
+      tags:
+      - Ping
+    post:
+      consumes:
+      - application/json
+      description: check api health
+      parameters:
+      - description: Ping
+        in: body
+        name: ping
+        required: true
+        schema:
+          $ref: '#/definitions/model.Ping'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utility.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utility.Response'
+      summary: check api health
+      tags:
+      - Health
+  /student:
+    get:
+      consumes:
+      - application/json
+      description: list all students
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utility.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utility.Response'
+      summary: list all students
+      tags:
+      - Student
+    post:
+      consumes:
+      - application/json
+      description: add a student
+      parameters:
+      - description: Student
+        in: body
+        name: student
+        required: true
+        schema:
+          $ref: '#/definitions/model.CreateStudent'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/utility.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utility.Response'
+      summary: add a student
+      tags:
+      - Student
+  /student/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: delete a student
+      parameters:
+      - description: Student ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utility.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utility.Response'
+      summary: delete a student
+      tags:
+      - Student
+    get:
+      consumes:
+      - application/json
+      description: get a student
+      parameters:
+      - description: Student ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utility.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utility.Response'
+      summary: get a student
+      tags:
+      - Student
+    put:
+      consumes:
+      - application/json
+      description: update a student
+      parameters:
+      - description: Student ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Student Update
+        in: body
+        name: update
+        required: true
+        schema:
+          $ref: '#/definitions/model.Student'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utility.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utility.Response'
+      summary: update a student
+      tags:
+      - Student
+  /student/{id}/courses:
+    get:
+      consumes:
+      - application/json
+      description: list courses taken by a student
+      parameters:
+      - description: Student ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utility.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utility.Response'
+      summary: list courses taken by a student
+      tags:
+      - Student
+    put:
+      consumes:
+      - application/json
+      description: update a student's courses
+      parameters:
+      - description: Student ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Student's courses'
+        in: body
+        name: update
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/model.Course'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utility.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utility.Response'
+      summary: update a student's courses
+      tags:
+      - Student
+securityDefinitions:
+  BasicAuth:
+    type: basic
+swagger: "2.0"

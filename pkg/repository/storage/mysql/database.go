@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 	"github.com/Emmrys-Jay/altschool-sms/internal/config"
+	"github.com/Emmrys-Jay/altschool-sms/internal/model"
+	"github.com/Emmrys-Jay/altschool-sms/pkg/repository/storage"
 	"github.com/Emmrys-Jay/altschool-sms/utility"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -21,7 +23,7 @@ var (
 )
 
 // ConnectToDB connects to the mysql database
-func (m *MySQL) ConnectToDB() *gorm.DB {
+func ConnectToDB() *gorm.DB {
 	logger := utility.NewLogger()
 	database, err := gorm.Open(mysql.Open(dsn()), &gorm.Config{})
 	if err != nil {
@@ -36,7 +38,17 @@ func (m *MySQL) ConnectToDB() *gorm.DB {
 	return db
 }
 
-func GetDB() *MySQL {
+func MigrateDB(logger *utility.Logger) error {
+	err := db.AutoMigrate(&model.Student{}, &model.Course{})
+	if err != nil {
+		return err
+	}
+
+	logger.Info("DATABASE MIGRATION SUCCESSFUL")
+	return nil
+}
+
+func GetDB() storage.Repository {
 	return &MySQL{db: db}
 }
 

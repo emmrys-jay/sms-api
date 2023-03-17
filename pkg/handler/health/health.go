@@ -16,6 +16,17 @@ type Controller struct {
 	Logger   *utility.Logger
 }
 
+// Post godoc
+//
+//	@Summary		check api health
+//	@Description	check api health
+//	@Tags			Health
+//	@Accept			json
+//	@Produce		json
+//	@Param			ping	body		model.Ping	true	"Ping"
+//	@Success		200		{object}	utility.Response
+//	@Failure		400		{object}	utility.Response
+//	@Router			/health [post]
 func (base *Controller) Post(c *gin.Context) {
 	var (
 		req = model.Ping{}
@@ -46,6 +57,16 @@ func (base *Controller) Post(c *gin.Context) {
 
 }
 
+// Get godoc
+//
+//	@Summary		check api health
+//	@Description	check api health
+//	@Tags			Ping
+//	@Accept			json
+//	@Produce		json
+//	@Success		200	{object}	utility.Response
+//	@Failure		400	{object}	utility.Response
+//	@Router			/health [get]
 func (base *Controller) Get(c *gin.Context) {
 	if !ping.ReturnTrue() {
 		rd := utility.BuildErrorResponse(http.StatusInternalServerError, "error", "ping failed", fmt.Errorf("ping failed"), nil)

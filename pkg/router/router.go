@@ -1,6 +1,8 @@
 package router
 
 import (
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"net/http"
 
 	"github.com/Emmrys-Jay/altschool-sms/pkg/middleware"
@@ -23,6 +25,11 @@ func Setup(validate *validator.Validate, logger *utility.Logger) *gin.Engine {
 	ApiVersion := "v1"
 	Health(r, validate, ApiVersion, logger)
 	Auth(r, validate, ApiVersion, logger)
+	Student(r, validate, ApiVersion, logger)
+	Course(r, validate, ApiVersion, logger)
+
+	// Swagger
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	r.NoRoute(func(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{

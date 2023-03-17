@@ -14,12 +14,12 @@ func Course(r *gin.Engine, validate *validator.Validate, ApiVersion string, logg
 
 	authUrl := r.Group(fmt.Sprintf("/api/%v", ApiVersion))
 	{
-		authUrl.POST("/courses", course.Create)
-		authUrl.GET("/course/:id", course.Get)
+		authUrl.POST("/course", course.Create)
+		authUrl.GET("/course/:code", course.Get)
 		authUrl.GET("/course", course.List)
-		authUrl.PUT("/course/:id", course.Update)
-		authUrl.DELETE("/course/:id", course.Delete)
-		//authUrl.GET("/course/:id/students", course.GetStudents)
+		authUrl.PUT("/course/:code", course.Update)
+		authUrl.DELETE("/course/:code", course.Delete)
+		authUrl.GET("/course/:code/students", course.ListCourseStudents)
 	}
 
 	return r
