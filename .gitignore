@@ -15,5 +15,5 @@
 # vendor/
 config.yaml
 
-.env
+*.env
 logs/
