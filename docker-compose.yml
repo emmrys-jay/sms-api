@@ -10,6 +10,9 @@ services:
       MYSQL_PASSWORD: password
       MYSQL_DATABASE: sms
     container_name: mysql-instance
+    # Uncomment the lines below after creating 'mysql/datadir' in root directory
+#    volumes:
+#      - /mysql/datadir:/var/lib/mysql
     networks:
       - "my_network"
 
@@ -21,11 +24,17 @@ services:
     ports:
       - '3000:3000'
     container_name: altschool-sms
-#    volumes:
-#      - /mysql/datadir:var/lib/mysql
+    environment:
+      - PORT=3000
+      - DB_HOST=mysql-instance
+      - DB_USERNAME=default
+      - DB_PASSWORD=password
+      - DB_PORT=3306
+      - DB_NAME=sms
+    volumes:
+      - .:/app
     networks:
       - "my_network"
-
 
 networks:
   my_network:
