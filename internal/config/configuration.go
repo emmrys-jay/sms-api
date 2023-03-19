@@ -1,7 +1,7 @@
 package config
 
 import (
-	"log"
+	log "github.com/sirupsen/logrus"
 
 	"github.com/Emmrys-Jay/altschool-sms/utility"
 	"github.com/spf13/viper"
@@ -15,7 +15,7 @@ type Configuration struct {
 	DBPassword    string `mapstructure:"DB_PASSWORD"`
 	DBPort        string `mapstructure:"DB_PORT"`
 	DBName        string `mapstructure:"DB_NAME"`
-	AdminEmail    string `mapstructure:"ADMIN_EMAIL"`
+	AdminMatNum   string `mapstructure:"ADMIN_MATRIC_NUMBER"`
 	AdminPassword string `mapstructure:"ADMIN_PASSWORD"`
 }
 
@@ -46,7 +46,10 @@ func Setup() {
 
 	// Params = configuration.Params
 	Config = configuration
-	logger.Info("configurations loading successfully")
+	log.Info("CONFIGURATIONS LOADED SUCCESSFULLY")
+	log.Infoln("CONFIGURATIONS: ")
+	log.Infoln(configuration)
+	logger.Info("CONFIGURATIONS LOADED SUCCESSFULLY")
 }
 
 // GetConfig helps you to get configuration data

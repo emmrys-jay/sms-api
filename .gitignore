@@ -15,6 +15,6 @@
 # vendor/
 config.yaml
 
-*.env
+config.env
 logs/
 altschool-sms
