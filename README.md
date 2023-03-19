@@ -19,7 +19,7 @@ to perform actions required to efficiently manage schools (universities).
 
 - Clone this project using
   ```shell
-    git clone github.com/Emmrys-Jay/altschool-sms.git
+  git clone github.com/Emmrys-Jay/altschool-sms.git
   ```
 
 - Create a `config.env` file in the project root directory, and populate it with
@@ -28,14 +28,14 @@ to perform actions required to efficiently manage schools (universities).
   Example `config.env` file:
 
   ```shell
-    SECRET_KEY=mySecretKey
-    ADMIN_MATRIC_NUMBER=admin
-    ADMIN_PASSWORD=admin
+  SECRET_KEY=mySecretKey
+  ADMIN_MATRIC_NUMBER=admin
+  ADMIN_PASSWORD=admin
   ```
 
 - Start up and build containers using 
   ```shell
-    docker-compose up --build
+  docker-compose up --build
   ```
 
 
@@ -43,7 +43,7 @@ to perform actions required to efficiently manage schools (universities).
 
 - Clone this project using 
   ```shell
-    git clone github.com/Emmrys-Jay/altschool-sms.git
+  git clone github.com/Emmrys-Jay/altschool-sms.git
   ```
 
 - Create a `config.env` file in the project root directory, and populate it with 
@@ -52,24 +52,24 @@ the project configuration.
   Example `config.env`:
 
   ```shell
-    PORT=3000
-    SECRET_KEY=mySecretKey
-    DB_HOST=127.0.0.1
-    DB_USERNAME=default
-    DB_PASSWORD=password
-    DB_PORT=3306
-    DB_NAME=sms
-    ADMIN_MATRIC_NUMBER=admin
-    ADMIN_PASSWORD=admin
+  PORT=3000
+  SECRET_KEY=mySecretKey
+  DB_HOST=127.0.0.1
+  DB_USERNAME=default
+  DB_PASSWORD=password
+  DB_PORT=3306
+  DB_NAME=sms
+  ADMIN_MATRIC_NUMBER=admin
+  ADMIN_PASSWORD=admin
   ```
 
 - Run project using
   ```shell
-    go run main.go
+  go run main.go
   ```
   OR 
   ```shell
-    go build . && ./altschool-sms
+  go build . && ./altschool-sms
   ```
 
 ## Test API
