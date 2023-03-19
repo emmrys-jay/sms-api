@@ -2,7 +2,6 @@ package mysql
 
 import (
 	"context"
-	"fmt"
 	"github.com/Emmrys-Jay/altschool-sms/internal/config"
 	"github.com/Emmrys-Jay/altschool-sms/internal/model"
 	"github.com/Emmrys-Jay/altschool-sms/pkg/repository/storage"
@@ -31,13 +30,14 @@ func ConnectToDB() *gorm.DB {
 	}
 
 	// IF EVERYTHING IS OKAY, THEN CONNECT
-	fmt.Println("MYSQL CONNECTION ESTABLISHED")
+	log.Println("MYSQL CONNECTION ESTABLISHED")
 	logger.Info("MYSQL CONNECTION ESTABLISHED")
 
 	db = database
 	return db
 }
 
+// MigrateDB creates db schemas
 func MigrateDB(logger *utility.Logger) error {
 	err := db.AutoMigrate(&model.Student{}, &model.Course{})
 	if err != nil {
@@ -48,6 +48,7 @@ func MigrateDB(logger *utility.Logger) error {
 	return nil
 }
 
+// GetDB returns database repository
 func GetDB() storage.Repository {
 	return &MySQL{db: db}
 }

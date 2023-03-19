@@ -9,17 +9,19 @@ import (
 	"strings"
 )
 
-// Create godoc
+// Create
 //
-//	@Summary		create a course
-//	@Description	create a course
-//	@Tags			Course
-//	@Accept			json
-//	@Produce		json
-//	@Param			course	body		model.Course	true	"Course"
-//	@Success		201		{object}	utility.Response
-//	@Failure		400		{object}	utility.Response
-//	@Router			/course [post]
+// @Summary		create a course - Admin
+// @Description	create a course - Admin
+// @Tags			Course - Admin
+// @Accept			json
+// @Produce		json
+// @Param			course	body		model.CourseForDoc	true	"Course"
+// @Success		201		{object}	utility.Response
+// @Failure		400		{object}	utility.Response
+// @Failure		401		{object}	utility.Response
+// @Router			/course [post]
+// @Security		JWTToken
 func (base *Controller) Create(c *gin.Context) {
 	var course model.Course
 
@@ -46,17 +48,19 @@ func (base *Controller) Create(c *gin.Context) {
 
 }
 
-// Get godoc
+//	Get
 //
-//	@Summary		get a course
-//	@Description	get a course
-//	@Tags			Course
-//	@Accept			json
-//	@Produce		json
-//	@Param			code	path		string	true	"Course Code"
-//	@Success		200		{object}	utility.Response
-//	@Failure		400		{object}	utility.Response
-//	@Router			/course/{id} [get]
+// @Summary		get a course - Admin
+// @Description	get a course - Admin
+// @Tags			Course - Admin
+// @Accept			json
+// @Produce		json
+// @Param			code	path		string	true	"Course Code"
+// @Success		200		{object}	utility.Response
+// @Failure		400		{object}	utility.Response
+// @Failure		401		{object}	utility.Response
+// @Router			/course/{code} [get]
+// @Security		JWTToken
 func (base *Controller) Get(c *gin.Context) {
 
 	code := strings.ToUpper(c.Param("code"))
@@ -73,16 +77,18 @@ func (base *Controller) Get(c *gin.Context) {
 
 }
 
-// List godoc
+// List
 //
-//	@Summary		list all courses
-//	@Description	list all courses
-//	@Tags			Course
+//	@Summary		list all courses - Admin
+//	@Description	list all courses - Admin
+//	@Tags			Course - Admin
 //	@Accept			json
 //	@Produce		json
 //	@Success		200	{object}	utility.Response
 //	@Failure		400	{object}	utility.Response
+//	@Failure		401		{object}	utility.Response
 //	@Router			/course [get]
+//	@Security		JWTToken
 func (base *Controller) List(c *gin.Context) {
 
 	courses, err := courseService.List(c)
@@ -97,17 +103,19 @@ func (base *Controller) List(c *gin.Context) {
 
 }
 
-// ListCourseStudents godoc
+//	ListCourseStudents
 //
-//	@Summary		list students taking a course
-//	@Description	list students taking a course
-//	@Tags			Course
-//	@Accept			json
-//	@Produce		json
-//	@Param			code	path		string	true	"Course Code"
-//	@Success		200		{object}	utility.Response
-//	@Failure		400		{object}	utility.Response
-//	@Router			/course/{id}/students [get]
+// @Summary		list students taking a course - Admin
+// @Description	list students taking a course - Admin
+// @Tags			Course - Admin
+// @Accept			json
+// @Produce		json
+// @Param			code	path		string	true	"Course Code"
+// @Success		200		{object}	utility.Response
+// @Failure		400		{object}	utility.Response
+// @Failure		401		{object}	utility.Response
+// @Router			/course/{code}/students [get]
+// @Security		JWTToken
 func (base *Controller) ListCourseStudents(c *gin.Context) {
 
 	code := strings.ToUpper(c.Param("code"))
@@ -124,23 +132,25 @@ func (base *Controller) ListCourseStudents(c *gin.Context) {
 
 }
 
-// Update godoc
+//	Update
 //
-//	@Summary		update a course
-//	@Description	update a course
-//	@Tags			Course
-//	@Accept			json
-//	@Produce		json
-//	@Param			code	path		string			true	"Course Code"
-//	@Param			update	body		model.Course	true	"Course Update"
-//	@Success		200		{object}	utility.Response
-//	@Failure		400		{object}	utility.Response
-//	@Router			/course/{id} [put]
+// @Summary		update a course - Admin
+// @Description	update a course - Admin
+// @Tags			Course - Admin
+// @Accept			json
+// @Produce		json
+// @Param			code	path		string				true	"Course Code"
+// @Param			update	body		model.UpdateCourse	true	"Course Update"
+// @Success		200		{object}	utility.Response
+// @Failure		400		{object}	utility.Response
+// @Failure		401		{object}	utility.Response
+// @Router			/course/{code} [put]
+// @Security		JWTToken
 func (base *Controller) Update(c *gin.Context) {
 
 	code := strings.ToUpper(c.Param("code"))
 
-	var course model.Course
+	var course model.UpdateCourse
 	if err := c.Bind(&course); err != nil {
 		rd := utility.BuildErrorResponse(http.StatusBadRequest, "failed", "binding error", err.Error(), nil)
 		c.JSON(http.StatusBadRequest, rd)
@@ -164,17 +174,19 @@ func (base *Controller) Update(c *gin.Context) {
 
 }
 
-// Delete godoc
+//	Delete
 //
-//	@Summary		delete a course
-//	@Description	delete a course
-//	@Tags			Course
-//	@Accept			json
-//	@Produce		json
-//	@Param			id	path		string	true	"Course Code"
-//	@Success		200	{object}	utility.Response
-//	@Failure		400	{object}	utility.Response
-//	@Router			/course/{id} [delete]
+// @Summary		delete a course - Admin
+// @Description	delete a course - Admin
+// @Tags			Course - Admin
+// @Accept			json
+// @Produce		json
+// @Param			code	path		string	true	"Course Code"
+// @Success		200	{object}	utility.Response
+// @Failure		400	{object}	utility.Response
+// @Failure		401		{object}	utility.Response
+// @Router			/course/{code} [delete]
+// @Security		JWTToken
 func (base *Controller) Delete(c *gin.Context) {
 
 	code := strings.ToUpper(c.Param("code"))

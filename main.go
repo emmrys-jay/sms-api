@@ -1,8 +1,10 @@
 package main
 
 import (
-	"github.com/Emmrys-Jay/altschool-sms/pkg/repository/storage/mysql"
+	"github.com/Emmrys-Jay/altschool-sms/service/user"
 	"log"
+
+	"github.com/Emmrys-Jay/altschool-sms/pkg/repository/storage/mysql"
 
 	"github.com/Emmrys-Jay/altschool-sms/internal/config"
 	"github.com/Emmrys-Jay/altschool-sms/utility"
@@ -20,7 +22,7 @@ func init() {
 
 //	@title			School Management System
 //	@version		1.0
-//	@description	This is a School Management System API.
+//	@description	School Management System API.
 //	@termsOfService	http://swagger.io/terms/
 
 //	@contact.name	API Support
@@ -33,7 +35,10 @@ func init() {
 //	@host		localhost:3000
 //	@BasePath	/api/v1
 
-//	@securityDefinitions.basic	BasicAuth
+//	@securityDefinitions.apikey	JWTToken
+//	@in							header
+//	@name						Authorization
+//	@description				JWT token
 
 //	@externalDocs.description	OpenAPI
 //	@externalDocs.url			https://swagger.io/resources/open-api/
@@ -43,13 +48,17 @@ func main() {
 
 	//Migrate DB
 	if err := mysql.MigrateDB(logger); err != nil {
-		log.Fatal(err)
+		log.Fatalln(err)
 	}
 
 	//Load config
 	getConfig := config.GetConfig()
 	validatorRef := validator.New()
 	r := router.Setup(validatorRef, logger)
+
+	if err := user.CreateAdminUser(logger); err != nil {
+		log.Fatalln(err)
+	}
 
 	logger.Info("Server is starting at 127.0.0.1:%s", getConfig.Port)
 	log.Fatal(r.Run(":" + getConfig.Port))

@@ -15,6 +15,7 @@ type Repository interface {
 	DeleteCourse(ctx context.Context, code string) error
 
 	ListCourseStudents(ctx context.Context, code string) (*model.ListStudentsForm, error)
+	GetStudentByMatNum(ctx context.Context, matNum string) (*model.Student, error)
 
 	// Student
 	CreateStudent(ctx context.Context, student *model.Student) error

@@ -6,12 +6,14 @@ import (
 	"gorm.io/gorm"
 )
 
+// CreateStudent adds 'student' to the database
 func (m *MySQL) CreateStudent(ctx context.Context, student *model.Student) error {
 	db, cancel := m.DBWithTimeout(ctx)
 	defer cancel()
 	return db.Create(student).Error
 }
 
+// GetStudent queries the database for a student with 'id'
 func (m *MySQL) GetStudent(ctx context.Context, id uint) (*model.Student, error) {
 	db, cancel := m.DBWithTimeout(ctx)
 	defer cancel()
@@ -24,6 +26,7 @@ func (m *MySQL) GetStudent(ctx context.Context, id uint) (*model.Student, error)
 	return &student, nil
 }
 
+// ListStudents returns all students in the database
 func (m *MySQL) ListStudents(ctx context.Context) ([]model.Student, error) {
 	db, cancel := m.DBWithTimeout(ctx)
 	defer cancel()
@@ -36,6 +39,7 @@ func (m *MySQL) ListStudents(ctx context.Context) ([]model.Student, error) {
 	return students, nil
 }
 
+// ListStudentCourses returns all courses being taken by student with 'id'
 func (m *MySQL) ListStudentCourses(ctx context.Context, id uint) (*model.ListCoursesForm, error) {
 	db, cancel := m.DBWithTimeout(ctx)
 	defer cancel()
@@ -57,6 +61,7 @@ func (m *MySQL) ListStudentCourses(ctx context.Context, id uint) (*model.ListCou
 	return &listCoursesForm, nil
 }
 
+// UpdateStudent updates a student with 'id' with 'student' in the database
 func (m *MySQL) UpdateStudent(ctx context.Context, id uint, student *model.Student) error {
 	db, cancel := m.DBWithTimeout(ctx)
 	defer cancel()
@@ -64,6 +69,7 @@ func (m *MySQL) UpdateStudent(ctx context.Context, id uint, student *model.Stude
 	return db.Model(model.Student{}).Where("id = ?", id).Updates(student).Error
 }
 
+// UpdateStudentCourses updates the course currently being taken by student with 'id' to 'newCourses'
 func (m *MySQL) UpdateStudentCourses(ctx context.Context, id uint, newCourses []model.Course) error {
 	db, cancel := m.DBWithTimeout(ctx)
 	defer cancel()
@@ -88,9 +94,10 @@ func (m *MySQL) UpdateStudentCourses(ctx context.Context, id uint, newCourses []
 	return db.Session(&gorm.Session{FullSaveAssociations: true}).Updates(&student).Error
 }
 
+// DeleteStudent deletes a student with 'id'
 func (m *MySQL) DeleteStudent(ctx context.Context, id uint) error {
 	db, cancel := m.DBWithTimeout(ctx)
 	defer cancel()
 
-	return db.Where("id = ?", id).Delete(&model.Student{}).Error
+	return db.Delete(&model.Student{}, "id = ?", id).Error
 }

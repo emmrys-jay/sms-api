@@ -9,17 +9,19 @@ import (
 	"strconv"
 )
 
-// Create godoc
+//	Create
 //
-//	@Summary		add a student
-//	@Description	add a student
-//	@Tags			Student
-//	@Accept			json
-//	@Produce		json
-//	@Param			student	body		model.CreateStudent	true	"Student"
-//	@Success		201		{object}	utility.Response
-//	@Failure		400		{object}	utility.Response
-//	@Router			/student [post]
+// @Summary		add a student - Admin
+// @Description	add a student - Admin
+// @Tags			Student - Admin
+// @Accept			json
+// @Produce		json
+// @Param			student	body		model.CreateStudent	true	"Student"
+// @Success		201		{object}	utility.Response
+// @Failure		400		{object}	utility.Response
+// @Failure		401		{object}	utility.Response
+// @Router			/student [post]
+// @Security		JWTToken
 func (base *Controller) Create(c *gin.Context) {
 	var student model.CreateStudent
 
@@ -47,17 +49,19 @@ func (base *Controller) Create(c *gin.Context) {
 
 }
 
-// Get godoc
+//	Get
 //
-//	@Summary		get a student
-//	@Description	get a student
-//	@Tags			Student
-//	@Accept			json
-//	@Produce		json
-//	@Param			id	path		int	true	"Student ID"
-//	@Success		200	{object}	utility.Response
-//	@Failure		400	{object}	utility.Response
-//	@Router			/student/{id} [get]
+// @Summary		get a student
+// @Description	get a student - Student
+// @Tags			Student
+// @Accept			json
+// @Produce		json
+// @Param			id	path		int	true	"Student ID"
+// @Success		200	{object}	utility.Response
+// @Failure		400	{object}	utility.Response
+// @Failure		401		{object}	utility.Response
+// @Router			/student/{id} [get]
+// @Security		JWTToken
 func (base *Controller) Get(c *gin.Context) {
 
 	idStr := c.Param("id")
@@ -80,16 +84,18 @@ func (base *Controller) Get(c *gin.Context) {
 
 }
 
-// List godoc
+//	List
 //
-//	@Summary		list all students
-//	@Description	list all students
-//	@Tags			Student
-//	@Accept			json
-//	@Produce		json
-//	@Success		200	{object}	utility.Response
-//	@Failure		400	{object}	utility.Response
-//	@Router			/student [get]
+// @Summary		list all students - Admin
+// @Description	list all students - Admin
+// @Tags			Student - Admin
+// @Accept			json
+// @Produce		json
+// @Success		200	{object}	utility.Response
+// @Failure		400	{object}	utility.Response
+// @Failure		401		{object}	utility.Response
+// @Router			/student [get]
+// @Security		JWTToken
 func (base *Controller) List(c *gin.Context) {
 
 	students, err := studentService.List(c)
@@ -104,17 +110,19 @@ func (base *Controller) List(c *gin.Context) {
 
 }
 
-// ListStudentCourses godoc
+//	ListStudentCourses
 //
-//	@Summary		list courses taken by a student
-//	@Description	list courses taken by a student
-//	@Tags			Student
-//	@Accept			json
-//	@Produce		json
-//	@Param			id	path		int	true	"Student ID"
-//	@Success		200	{object}	utility.Response
-//	@Failure		400	{object}	utility.Response
-//	@Router			/student/{id}/courses [get]
+// @Summary		list courses taken by a student
+// @Description	list courses taken by a student
+// @Tags			Student
+// @Accept			json
+// @Produce		json
+// @Param			id	path		int	true	"Student ID"
+// @Success		200	{object}	utility.Response
+// @Failure		400	{object}	utility.Response
+// @Failure		401		{object}	utility.Response
+// @Router			/student/{id}/courses [get]
+// @Security		JWTToken
 func (base *Controller) ListStudentCourses(c *gin.Context) {
 
 	idStr := c.Param("id")
@@ -136,18 +144,20 @@ func (base *Controller) ListStudentCourses(c *gin.Context) {
 	c.JSON(http.StatusOK, rd)
 }
 
-// Update godoc
+//	Update
 //
-//	@Summary		update a student
-//	@Description	update a student
-//	@Tags			Student
-//	@Accept			json
-//	@Produce		json
-//	@Param			id		path		int				true	"Student ID"
-//	@Param			update	body		model.Student	true	"Student Update"
-//	@Success		200		{object}	utility.Response
-//	@Failure		400		{object}	utility.Response
-//	@Router			/student/{id} [put]
+// @Summary		update a student
+// @Description	update a student
+// @Tags			Student
+// @Accept			json
+// @Produce		json
+// @Param			id		path		int					true	"Student ID"
+// @Param			update	body		model.UpdateStudent	true	"Student Update"
+// @Success		200		{object}	utility.Response
+// @Failure		400		{object}	utility.Response
+// @Failure		401		{object}	utility.Response
+// @Router			/student/{id} [put]
+// @Security		JWTToken
 func (base *Controller) Update(c *gin.Context) {
 
 	idStr := c.Param("id")
@@ -158,7 +168,7 @@ func (base *Controller) Update(c *gin.Context) {
 		return
 	}
 
-	var student model.Student
+	var student model.UpdateStudent
 	if err := c.Bind(&student); err != nil {
 		rd := utility.BuildErrorResponse(http.StatusBadRequest, "failed", "binding error", err.Error(), nil)
 		c.JSON(http.StatusBadRequest, rd)
@@ -182,18 +192,20 @@ func (base *Controller) Update(c *gin.Context) {
 
 }
 
-// UpdateCourses godoc
+//	UpdateCourses
 //
-//	@Summary		update a student's courses
-//	@Description	update a student's courses
-//	@Tags			Student
-//	@Accept			json
-//	@Produce		json
-//	@Param			id		path		int				true	"Student ID"
-//	@Param			update	body		[]model.Course	true	"Student's courses'"
-//	@Success		200		{object}	utility.Response
-//	@Failure		400		{object}	utility.Response
-//	@Router			/student/{id}/courses [put]
+// @Summary		update or add single student courses - Admin
+// @Description	update or add single student courses - Admin
+// @Tags			Student - Admin
+// @Accept			json
+// @Produce		json
+// @Param			id		path		int						true	"Student ID"
+// @Param			update	body		[]model.CourseForDoc	true	"Student's courses'"
+// @Success		200		{object}	utility.Response
+// @Failure		400		{object}	utility.Response
+// @Failure		401		{object}	utility.Response
+// @Router			/student/{id}/courses [put]
+// @Security		JWTToken
 func (base *Controller) UpdateCourses(c *gin.Context) {
 
 	idStr := c.Param("id")
@@ -228,17 +240,19 @@ func (base *Controller) UpdateCourses(c *gin.Context) {
 
 }
 
-// Delete godoc
+//	Delete
 //
-//	@Summary		delete a student
-//	@Description	delete a student
-//	@Tags			Student
-//	@Accept			json
-//	@Produce		json
-//	@Param			id	path		int	true	"Student ID"
-//	@Success		200	{object}	utility.Response
-//	@Failure		400	{object}	utility.Response
-//	@Router			/student/{id} [delete]
+// @Summary		delete a student - Admin
+// @Description	delete a student - Admin
+// @Tags			Student - Admin
+// @Accept			json
+// @Produce		json
+// @Param			id	path		int	true	"Student ID"
+// @Success		200	{object}	utility.Response
+// @Failure		400	{object}	utility.Response
+// @Failure		401		{object}	utility.Response
+// @Router			/student/{id} [delete]
+// @Security		JWTToken
 func (base *Controller) Delete(c *gin.Context) {
 
 	idStr := c.Param("id")

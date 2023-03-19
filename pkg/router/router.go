@@ -10,8 +10,11 @@ import (
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
+
+	_ "github.com/Emmrys-Jay/altschool-sms/docs"
 )
 
+// Setup creates a new router and registers all handlers to it
 func Setup(validate *validator.Validate, logger *utility.Logger) *gin.Engine {
 	r := gin.New()
 

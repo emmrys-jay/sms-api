@@ -4,16 +4,6 @@ import (
 	"time"
 )
 
-type CreateStudent struct {
-	FirstName    string   `validate:"required" json:"first_name"`
-	LastName     string   `validate:"required" json:"last_name"`
-	Email        string   `validate:"required,email" json:"email"`
-	MatricNumber string   `validate:"required" json:"matric_number"`
-	Password     string   `validate:"required,min=8" json:"password"`
-	YearOfBirth  int      `validate:"gte=0" json:"year_of_birth,omitempty"`
-	Courses      []Course `json:"-"`
-}
-
 type Student struct {
 	ID           uint      `gorm:"column:id;type:uint;" json:"id"`
 	FirstName    string    `gorm:"column:first_name;" json:"first_name"`
@@ -25,6 +15,24 @@ type Student struct {
 	CreatedAt    time.Time `gorm:"created_at;" json:"created_at"`
 	UpdatedAt    time.Time `gorm:"updated_at;" json:"updated_at"`
 	Courses      []Course  `gorm:"many2many:student_courses;" json:"courses,omitempty"`
+}
+
+type CreateStudent struct {
+	FirstName    string `validate:"required" json:"first_name"`
+	LastName     string `validate:"required" json:"last_name"`
+	Email        string `validate:"email" json:"email"`
+	MatricNumber string `validate:"required" json:"matric_number"`
+	Password     string `validate:"required" json:"password"`
+	YearOfBirth  int    `validate:"gte=0" json:"year_of_birth,omitempty"`
+}
+
+type UpdateStudent struct {
+	FirstName    string `json:"first_name"`
+	LastName     string `json:"last_name"`
+	Email        string `json:"email"`
+	MatricNumber string `json:"matric_number"`
+	Password     string `json:"password"`
+	YearOfBirth  int    `validate:"gte=0" json:"year_of_birth,omitempty"`
 }
 
 type ListCoursesForm struct {

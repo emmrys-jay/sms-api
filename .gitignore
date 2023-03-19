@@ -17,4 +17,4 @@ config.yaml
 
 *.env
 logs/
-altschool*
+altschool-sms
