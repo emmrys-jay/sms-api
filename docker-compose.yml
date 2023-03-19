@@ -22,10 +22,10 @@ services:
     depends_on:
       - mysql-instance
     ports:
-      - '3000:3000'
+      - '5000:5000'
     container_name: altschool-sms
     environment:
-      - PORT=3000
+      - PORT=5000
       - DB_HOST=mysql-instance
       - DB_USERNAME=default
       - DB_PASSWORD=password

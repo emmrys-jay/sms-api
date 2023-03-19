@@ -105,16 +105,6 @@ func (l *Logger) Error(arg0 interface{}, args ...interface{}) {
 	l.logger.Log(log.ERROR, getSource(), fmt.Sprintf(arg0.(string), args...))
 }
 
-// Error log errors
-func (l *Logger) mongoError(arg0 interface{}, args ...interface{}) {
-	l.logger.Log(log.ERROR, getSource(), fmt.Sprintf(arg0.(string), args...))
-}
-
-// Info log errors
-func (l *Logger) mongoInfo(arg0 interface{}, args ...interface{}) {
-	l.logger.Log(log.INFO, getSource(), fmt.Sprintf(arg0.(string), args...))
-}
-
 // Fatal log fatal errors
 func (l *Logger) Fatal(arg0 interface{}, args ...interface{}) {
 	//record := LogRecord{
