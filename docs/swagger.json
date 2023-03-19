@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "This is a School Management System API.",
+        "description": "School Management System API.",
         "title": "School Management System",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
@@ -20,7 +20,12 @@
     "paths": {
         "/course": {
             "get": {
-                "description": "list all courses",
+                "security": [
+                    {
+                        "JWTToken": []
+                    }
+                ],
+                "description": "list all courses - Admin",
                 "consumes": [
                     "application/json"
                 ],
@@ -28,9 +33,9 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Course"
+                    "Course - Admin"
                 ],
-                "summary": "list all courses",
+                "summary": "list all courses - Admin",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -43,11 +48,22 @@
                         "schema": {
                             "$ref": "#/definitions/utility.Response"
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/utility.Response"
+                        }
                     }
                 }
             },
             "post": {
-                "description": "create a course",
+                "security": [
+                    {
+                        "JWTToken": []
+                    }
+                ],
+                "description": "create a course - Admin",
                 "consumes": [
                     "application/json"
                 ],
@@ -55,9 +71,9 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Course"
+                    "Course - Admin"
                 ],
-                "summary": "create a course",
+                "summary": "create a course - Admin",
                 "parameters": [
                     {
                         "description": "Course",
@@ -65,7 +81,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.Course"
+                            "$ref": "#/definitions/model.CourseForDoc"
                         }
                     }
                 ],
@@ -81,13 +97,24 @@
                         "schema": {
                             "$ref": "#/definitions/utility.Response"
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/utility.Response"
+                        }
                     }
                 }
             }
         },
-        "/course/{id}": {
+        "/course/{code}": {
             "get": {
-                "description": "get a course",
+                "security": [
+                    {
+                        "JWTToken": []
+                    }
+                ],
+                "description": "get a course - Admin",
                 "consumes": [
                     "application/json"
                 ],
@@ -95,9 +122,9 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Course"
+                    "Course - Admin"
                 ],
-                "summary": "get a course",
+                "summary": "get a course - Admin",
                 "parameters": [
                     {
                         "type": "string",
@@ -119,11 +146,22 @@
                         "schema": {
                             "$ref": "#/definitions/utility.Response"
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/utility.Response"
+                        }
                     }
                 }
             },
             "put": {
-                "description": "update a course",
+                "security": [
+                    {
+                        "JWTToken": []
+                    }
+                ],
+                "description": "update a course - Admin",
                 "consumes": [
                     "application/json"
                 ],
@@ -131,9 +169,9 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Course"
+                    "Course - Admin"
                 ],
-                "summary": "update a course",
+                "summary": "update a course - Admin",
                 "parameters": [
                     {
                         "type": "string",
@@ -148,7 +186,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.Course"
+                            "$ref": "#/definitions/model.UpdateCourse"
                         }
                     }
                 ],
@@ -161,6 +199,12 @@
                     },
                     "400": {
                         "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utility.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
                         "schema": {
                             "$ref": "#/definitions/utility.Response"
                         }
@@ -168,45 +212,12 @@
                 }
             },
             "delete": {
-                "description": "delete a course",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Course"
-                ],
-                "summary": "delete a course",
-                "parameters": [
+                "security": [
                     {
-                        "type": "string",
-                        "description": "Course Code",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
+                        "JWTToken": []
                     }
                 ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/utility.Response"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/utility.Response"
-                        }
-                    }
-                }
-            }
-        },
-        "/course/{id}/students": {
-            "get": {
-                "description": "list students taking a course",
+                "description": "delete a course - Admin",
                 "consumes": [
                     "application/json"
                 ],
@@ -214,9 +225,9 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Course"
+                    "Course - Admin"
                 ],
-                "summary": "list students taking a course",
+                "summary": "delete a course - Admin",
                 "parameters": [
                     {
                         "type": "string",
@@ -235,6 +246,61 @@
                     },
                     "400": {
                         "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utility.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/utility.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/course/{code}/students": {
+            "get": {
+                "security": [
+                    {
+                        "JWTToken": []
+                    }
+                ],
+                "description": "list students taking a course - Admin",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Course - Admin"
+                ],
+                "summary": "list students taking a course - Admin",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Course Code",
+                        "name": "code",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utility.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utility.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
                         "schema": {
                             "$ref": "#/definitions/utility.Response"
                         }
@@ -252,7 +318,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Ping"
+                    "Health"
                 ],
                 "summary": "check api health",
                 "responses": {
@@ -309,9 +375,9 @@
                 }
             }
         },
-        "/student": {
-            "get": {
-                "description": "list all students",
+        "/login": {
+            "post": {
+                "description": "login as an admin or student",
                 "consumes": [
                     "application/json"
                 ],
@@ -319,9 +385,20 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Student"
+                    "Auth"
                 ],
-                "summary": "list all students",
+                "summary": "login as an admin or student",
+                "parameters": [
+                    {
+                        "description": "Login Info",
+                        "name": "login-info",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Login"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -336,9 +413,16 @@
                         }
                     }
                 }
-            },
-            "post": {
-                "description": "add a student",
+            }
+        },
+        "/student": {
+            "get": {
+                "security": [
+                    {
+                        "JWTToken": []
+                    }
+                ],
+                "description": "list all students - Admin",
                 "consumes": [
                     "application/json"
                 ],
@@ -346,9 +430,47 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Student"
+                    "Student - Admin"
                 ],
-                "summary": "add a student",
+                "summary": "list all students - Admin",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utility.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utility.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/utility.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "JWTToken": []
+                    }
+                ],
+                "description": "add a student - Admin",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Student - Admin"
+                ],
+                "summary": "add a student - Admin",
                 "parameters": [
                     {
                         "description": "Student",
@@ -372,13 +494,24 @@
                         "schema": {
                             "$ref": "#/definitions/utility.Response"
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/utility.Response"
+                        }
                     }
                 }
             }
         },
         "/student/{id}": {
             "get": {
-                "description": "get a student",
+                "security": [
+                    {
+                        "JWTToken": []
+                    }
+                ],
+                "description": "get a student - Student",
                 "consumes": [
                     "application/json"
                 ],
@@ -410,10 +543,21 @@
                         "schema": {
                             "$ref": "#/definitions/utility.Response"
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/utility.Response"
+                        }
                     }
                 }
             },
             "put": {
+                "security": [
+                    {
+                        "JWTToken": []
+                    }
+                ],
                 "description": "update a student",
                 "consumes": [
                     "application/json"
@@ -439,7 +583,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.Student"
+                            "$ref": "#/definitions/model.UpdateStudent"
                         }
                     }
                 ],
@@ -455,11 +599,22 @@
                         "schema": {
                             "$ref": "#/definitions/utility.Response"
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/utility.Response"
+                        }
                     }
                 }
             },
             "delete": {
-                "description": "delete a student",
+                "security": [
+                    {
+                        "JWTToken": []
+                    }
+                ],
+                "description": "delete a student - Admin",
                 "consumes": [
                     "application/json"
                 ],
@@ -467,9 +622,9 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Student"
+                    "Student - Admin"
                 ],
-                "summary": "delete a student",
+                "summary": "delete a student - Admin",
                 "parameters": [
                     {
                         "type": "integer",
@@ -491,12 +646,23 @@
                         "schema": {
                             "$ref": "#/definitions/utility.Response"
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/utility.Response"
+                        }
                     }
                 }
             }
         },
         "/student/{id}/courses": {
             "get": {
+                "security": [
+                    {
+                        "JWTToken": []
+                    }
+                ],
                 "description": "list courses taken by a student",
                 "consumes": [
                     "application/json"
@@ -529,11 +695,22 @@
                         "schema": {
                             "$ref": "#/definitions/utility.Response"
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/utility.Response"
+                        }
                     }
                 }
             },
             "put": {
-                "description": "update a student's courses",
+                "security": [
+                    {
+                        "JWTToken": []
+                    }
+                ],
+                "description": "update or add single student courses - Admin",
                 "consumes": [
                     "application/json"
                 ],
@@ -541,9 +718,9 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Student"
+                    "Student - Admin"
                 ],
-                "summary": "update a student's courses",
+                "summary": "update or add single student courses - Admin",
                 "parameters": [
                     {
                         "type": "integer",
@@ -560,7 +737,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/model.Course"
+                                "$ref": "#/definitions/model.CourseForDoc"
                             }
                         }
                     }
@@ -577,13 +754,19 @@
                         "schema": {
                             "$ref": "#/definitions/utility.Response"
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/utility.Response"
+                        }
                     }
                 }
             }
         }
     },
     "definitions": {
-        "model.Course": {
+        "model.CourseForDoc": {
             "type": "object",
             "required": [
                 "course_code",
@@ -594,33 +777,20 @@
                 "course_code": {
                     "type": "string"
                 },
-                "created_at": {
-                    "type": "string"
-                },
                 "lecturer": {
                     "type": "string"
-                },
-                "students": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.Student"
-                    }
                 },
                 "title": {
                     "type": "string"
                 },
                 "units": {
                     "type": "integer"
-                },
-                "updated_at": {
-                    "type": "string"
                 }
             }
         },
         "model.CreateStudent": {
             "type": "object",
             "required": [
-                "email",
                 "first_name",
                 "last_name",
                 "matric_number",
@@ -640,12 +810,26 @@
                     "type": "string"
                 },
                 "password": {
-                    "type": "string",
-                    "minLength": 8
+                    "type": "string"
                 },
                 "year_of_birth": {
                     "type": "integer",
                     "minimum": 0
+                }
+            }
+        },
+        "model.Login": {
+            "type": "object",
+            "required": [
+                "matric_number",
+                "password"
+            ],
+            "properties": {
+                "matric_number": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
                 }
             }
         },
@@ -657,26 +841,28 @@
                 }
             }
         },
-        "model.Student": {
+        "model.UpdateCourse": {
             "type": "object",
             "properties": {
-                "courses": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.Course"
-                    }
-                },
-                "created_at": {
+                "lecturer": {
                     "type": "string"
                 },
+                "title": {
+                    "type": "string"
+                },
+                "units": {
+                    "type": "integer"
+                }
+            }
+        },
+        "model.UpdateStudent": {
+            "type": "object",
+            "properties": {
                 "email": {
                     "type": "string"
                 },
                 "first_name": {
                     "type": "string"
-                },
-                "id": {
-                    "type": "integer"
                 },
                 "last_name": {
                     "type": "string"
@@ -684,11 +870,12 @@
                 "matric_number": {
                     "type": "string"
                 },
-                "updated_at": {
+                "password": {
                     "type": "string"
                 },
                 "year_of_birth": {
-                    "type": "integer"
+                    "type": "integer",
+                    "minimum": 0
                 }
             }
         },
@@ -717,8 +904,11 @@
         }
     },
     "securityDefinitions": {
-        "BasicAuth": {
-            "type": "basic"
+        "JWTToken": {
+            "description": "JWT token",
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
         }
     }
 }

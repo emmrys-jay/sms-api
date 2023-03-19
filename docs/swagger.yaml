@@ -1,23 +1,15 @@
 basePath: /api/v1
 definitions:
-  model.Course:
+  model.CourseForDoc:
     properties:
       course_code:
         type: string
-      created_at:
-        type: string
       lecturer:
         type: string
-      students:
-        items:
-          $ref: '#/definitions/model.Student'
-        type: array
       title:
         type: string
       units:
         type: integer
-      updated_at:
-        type: string
     required:
     - course_code
     - title
@@ -34,15 +26,23 @@ definitions:
       matric_number:
         type: string
       password:
-        minLength: 8
         type: string
       year_of_birth:
         minimum: 0
         type: integer
     required:
-    - email
     - first_name
     - last_name
+    - matric_number
+    - password
+    type: object
+  model.Login:
+    properties:
+      matric_number:
+        type: string
+      password:
+        type: string
+    required:
     - matric_number
     - password
     type: object
@@ -51,27 +51,29 @@ definitions:
       email:
         type: string
     type: object
-  model.Student:
+  model.UpdateCourse:
     properties:
-      courses:
-        items:
-          $ref: '#/definitions/model.Course'
-        type: array
-      created_at:
+      lecturer:
         type: string
+      title:
+        type: string
+      units:
+        type: integer
+    type: object
+  model.UpdateStudent:
+    properties:
       email:
         type: string
       first_name:
         type: string
-      id:
-        type: integer
       last_name:
         type: string
       matric_number:
         type: string
-      updated_at:
+      password:
         type: string
       year_of_birth:
+        minimum: 0
         type: integer
     type: object
   utility.Response:
@@ -96,7 +98,7 @@ info:
     email: support@swagger.io
     name: API Support
     url: http://www.swagger.io/support
-  description: This is a School Management System API.
+  description: School Management System API.
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -108,7 +110,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: list all courses
+      description: list all courses - Admin
       produces:
       - application/json
       responses:
@@ -120,20 +122,26 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/utility.Response'
-      summary: list all courses
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/utility.Response'
+      security:
+      - JWTToken: []
+      summary: list all courses - Admin
       tags:
-      - Course
+      - Course - Admin
     post:
       consumes:
       - application/json
-      description: create a course
+      description: create a course - Admin
       parameters:
       - description: Course
         in: body
         name: course
         required: true
         schema:
-          $ref: '#/definitions/model.Course'
+          $ref: '#/definitions/model.CourseForDoc'
       produces:
       - application/json
       responses:
@@ -145,38 +153,20 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/utility.Response'
-      summary: create a course
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/utility.Response'
+      security:
+      - JWTToken: []
+      summary: create a course - Admin
       tags:
-      - Course
-  /course/{id}:
+      - Course - Admin
+  /course/{code}:
     delete:
       consumes:
       - application/json
-      description: delete a course
-      parameters:
-      - description: Course Code
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/utility.Response'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/utility.Response'
-      summary: delete a course
-      tags:
-      - Course
-    get:
-      consumes:
-      - application/json
-      description: get a course
+      description: delete a course - Admin
       parameters:
       - description: Course Code
         in: path
@@ -194,13 +184,49 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/utility.Response'
-      summary: get a course
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/utility.Response'
+      security:
+      - JWTToken: []
+      summary: delete a course - Admin
       tags:
-      - Course
+      - Course - Admin
+    get:
+      consumes:
+      - application/json
+      description: get a course - Admin
+      parameters:
+      - description: Course Code
+        in: path
+        name: code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utility.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utility.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/utility.Response'
+      security:
+      - JWTToken: []
+      summary: get a course - Admin
+      tags:
+      - Course - Admin
     put:
       consumes:
       - application/json
-      description: update a course
+      description: update a course - Admin
       parameters:
       - description: Course Code
         in: path
@@ -212,7 +238,7 @@ paths:
         name: update
         required: true
         schema:
-          $ref: '#/definitions/model.Course'
+          $ref: '#/definitions/model.UpdateCourse'
       produces:
       - application/json
       responses:
@@ -224,14 +250,20 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/utility.Response'
-      summary: update a course
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/utility.Response'
+      security:
+      - JWTToken: []
+      summary: update a course - Admin
       tags:
-      - Course
-  /course/{id}/students:
+      - Course - Admin
+  /course/{code}/students:
     get:
       consumes:
       - application/json
-      description: list students taking a course
+      description: list students taking a course - Admin
       parameters:
       - description: Course Code
         in: path
@@ -249,9 +281,15 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/utility.Response'
-      summary: list students taking a course
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/utility.Response'
+      security:
+      - JWTToken: []
+      summary: list students taking a course - Admin
       tags:
-      - Course
+      - Course - Admin
   /health:
     get:
       consumes:
@@ -270,7 +308,7 @@ paths:
             $ref: '#/definitions/utility.Response'
       summary: check api health
       tags:
-      - Ping
+      - Health
     post:
       consumes:
       - application/json
@@ -296,11 +334,18 @@ paths:
       summary: check api health
       tags:
       - Health
-  /student:
-    get:
+  /login:
+    post:
       consumes:
       - application/json
-      description: list all students
+      description: login as an admin or student
+      parameters:
+      - description: Login Info
+        in: body
+        name: login-info
+        required: true
+        schema:
+          $ref: '#/definitions/model.Login'
       produces:
       - application/json
       responses:
@@ -312,13 +357,38 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/utility.Response'
-      summary: list all students
+      summary: login as an admin or student
       tags:
-      - Student
+      - Auth
+  /student:
+    get:
+      consumes:
+      - application/json
+      description: list all students - Admin
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utility.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utility.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/utility.Response'
+      security:
+      - JWTToken: []
+      summary: list all students - Admin
+      tags:
+      - Student - Admin
     post:
       consumes:
       - application/json
-      description: add a student
+      description: add a student - Admin
       parameters:
       - description: Student
         in: body
@@ -337,14 +407,20 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/utility.Response'
-      summary: add a student
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/utility.Response'
+      security:
+      - JWTToken: []
+      summary: add a student - Admin
       tags:
-      - Student
+      - Student - Admin
   /student/{id}:
     delete:
       consumes:
       - application/json
-      description: delete a student
+      description: delete a student - Admin
       parameters:
       - description: Student ID
         in: path
@@ -362,13 +438,19 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/utility.Response'
-      summary: delete a student
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/utility.Response'
+      security:
+      - JWTToken: []
+      summary: delete a student - Admin
       tags:
-      - Student
+      - Student - Admin
     get:
       consumes:
       - application/json
-      description: get a student
+      description: get a student - Student
       parameters:
       - description: Student ID
         in: path
@@ -386,6 +468,12 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/utility.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/utility.Response'
+      security:
+      - JWTToken: []
       summary: get a student
       tags:
       - Student
@@ -404,7 +492,7 @@ paths:
         name: update
         required: true
         schema:
-          $ref: '#/definitions/model.Student'
+          $ref: '#/definitions/model.UpdateStudent'
       produces:
       - application/json
       responses:
@@ -416,6 +504,12 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/utility.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/utility.Response'
+      security:
+      - JWTToken: []
       summary: update a student
       tags:
       - Student
@@ -441,13 +535,19 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/utility.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/utility.Response'
+      security:
+      - JWTToken: []
       summary: list courses taken by a student
       tags:
       - Student
     put:
       consumes:
       - application/json
-      description: update a student's courses
+      description: update or add single student courses - Admin
       parameters:
       - description: Student ID
         in: path
@@ -460,7 +560,7 @@ paths:
         required: true
         schema:
           items:
-            $ref: '#/definitions/model.Course'
+            $ref: '#/definitions/model.CourseForDoc'
           type: array
       produces:
       - application/json
@@ -473,10 +573,19 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/utility.Response'
-      summary: update a student's courses
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/utility.Response'
+      security:
+      - JWTToken: []
+      summary: update or add single student courses - Admin
       tags:
-      - Student
+      - Student - Admin
 securityDefinitions:
-  BasicAuth:
-    type: basic
+  JWTToken:
+    description: JWT token
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"
