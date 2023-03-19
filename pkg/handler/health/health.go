@@ -61,7 +61,7 @@ func (base *Controller) Post(c *gin.Context) {
 //
 //	@Summary		check api health
 //	@Description	check api health
-//	@Tags			Ping
+//	@Tags			Health
 //	@Accept			json
 //	@Produce		json
 //	@Success		200	{object}	utility.Response
